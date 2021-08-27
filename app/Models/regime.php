@@ -13,4 +13,8 @@ class regime extends Model
         'name',
         'description'
     ];
+
+    public function regimeTecnicNote(){
+        return $this->hasMany(RegimeTecnicNote::class);
+    }
 }

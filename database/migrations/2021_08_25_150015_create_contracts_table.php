@@ -28,6 +28,9 @@ class CreateContractsTable extends Migration
             $table->string('price');
             $table->unsignedInteger('price_list_id');
             $table->string('variation');
+            $table->string('company_id');
+            $table->string('departament_id');
+            $table->string('municipality_id');
             $table->timestamps();
         });
     }

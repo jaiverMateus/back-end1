@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\tecnic_note_cup;
+use App\Models\TecnicNoteCup;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TecnicNoteCupFactory extends Factory
@@ -12,7 +12,7 @@ class TecnicNoteCupFactory extends Factory
      *
      * @var string
      */
-    protected $model = tecnic_note_cup::class;
+    protected $model = TecnicNoteCup::class;
 
     /**
      * Define the model's default state.

@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\regime_tecnic_note;
+use App\Models\RegimeTecnicNote;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RegimeTecnicNoteFactory extends Factory
@@ -12,7 +12,7 @@ class RegimeTecnicNoteFactory extends Factory
      *
      * @var string
      */
-    protected $model = regime_tecnic_note::class;
+    protected $model = RegimeTecnicNote::class;
 
     /**
      * Define the model's default state.

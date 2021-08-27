@@ -17,6 +17,7 @@ class CreateCupsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
+            $table->unsignedInteger('speciality_id');
             $table->string('notes');
             $table->timestamps();
         });

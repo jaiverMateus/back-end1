@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class regime_tecnic_note extends Model
+class RegimeTecnicNote extends Model
 {
     use HasFactory;
 
@@ -14,4 +14,12 @@ class regime_tecnic_note extends Model
         'tecnic_note_id'
 
     ];
+
+    public function regime(){
+        return $this->belongsTo(Regime::class);
+    }
+
+    public function tecnic_note(){
+        return $this->belongsTo(TecnicNote::class);
+    }
 }

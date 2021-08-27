@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\tecnic_note;
+use App\Models\TecnicNote;
 use Illuminate\Http\Request;
 
 class TecnicNoteController extends Controller
@@ -14,7 +14,7 @@ class TecnicNoteController extends Controller
      */
     public function index()
     {
-        return tecnic_note::all();
+        return TecnicNote::all();
     }
 
     /**
@@ -36,7 +36,7 @@ class TecnicNoteController extends Controller
     public function store(Request $request)
     {
         try {
-            tecnic_note::create($request->all());
+            TecnicNote::create($request->all());
             return response()->json('Nota tecnica creada correctamente');
         } catch (\Throwable $th) {
             return response()->json([$th->getMessage(), $th->getLine()]);
@@ -46,30 +46,36 @@ class TecnicNoteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\tecnic_note  $tecnic_note
+     * @param  \App\Models\TecnicNote  $TecnicNote
      * @return \Illuminate\Http\Response
      */
-    public function show(tecnic_note $tecnic_note)
+    public function show($id)
     {
-        //
+        try{
+            $TecnicNote = TecnicNote::findOrFail($id);
+            // return response()->json( $administrator);
+            return TecnicNote::with('tecnicNoteCup','regimeTecnicNote')->find(2);
+        }catch(\Throwable $th){
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\tecnic_note  $tecnic_note
+     * @param  \App\Models\TecnicNote  $TecnicNote
      * @return \Illuminate\Http\Response
      */
-    public function edit(tecnic_note $tecnic_note)
+    public function edit(TecnicNote $TecnicNote)
     {
-        $tecnic_note = tecnic_note::findOrFail($id);
+        $TecnicNote = TecnicNote::findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\tecnic_note  $tecnic_note
+     * @param  \App\Models\TecnicNote  $TecnicNote
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -77,13 +83,13 @@ class TecnicNoteController extends Controller
         try{
 
        
-            $tecnic_note = tecnic_note::findOrFail($id);
-            $tecnic_note->frequency = $request->frequency;
-            $tecnic_note->alert_percentage = $request->alert_percentage;
-            $tecnic_note->unit_value = $request->unit_value;
-            $tecnic_note->date=$request->date;
-            $tecnic_note->chance=$request->chance;
-            $tecnic_note->save();
+            $TecnicNote = TecnicNote::findOrFail($id);
+            $TecnicNote->frequency = $request->frequency;
+            $TecnicNote->alert_percentage = $request->alert_percentage;
+            $TecnicNote->unit_value = $request->unit_value;
+            $TecnicNote->date=$request->date;
+            $TecnicNote->chance=$request->chance;
+            $TecnicNote->save();
             return response()->json('Notas tecnicas actualizado correctamente');
             
          }catch(\Throwable $th){
@@ -94,14 +100,14 @@ class TecnicNoteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\tecnic_note  $tecnic_note
+     * @param  \App\Models\TecnicNote  $TecnicNote
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         try{
-            $tecnic_note = tecnic_note::findOrFail($id);
-            $tecnic_note->delete();
+            $TecnicNote = TecnicNote::findOrFail($id);
+            $TecnicNote->delete();
             return response()->json('administrador eliminado correctamente');
         }catch(\Throwable $th){
             return response()->json([$th->getMessage(), $th->getLine()]);

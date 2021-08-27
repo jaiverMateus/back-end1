@@ -17,6 +17,12 @@ class Administrator extends Model
     ];
 
      public function contracts(){
+
         return $this->hasMany(Contract::class);
+
+        // if($type){
+
+        //     return $this->Where($type,'like',"%$type%");
+        // }
     }
 }

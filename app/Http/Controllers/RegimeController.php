@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\regime;
+use App\Models\Regime;
 use Illuminate\Http\Request;
 
 class RegimeController extends Controller
@@ -14,7 +14,7 @@ class RegimeController extends Controller
      */
     public function index()
     {
-        return regime::all();
+        return Regime::all();
     }
 
     /**
@@ -36,7 +36,7 @@ class RegimeController extends Controller
     public function store(Request $request)
     {
         try {
-            regime::create($request->all());
+            Regime::create($request->all());
             return response()->json('Regimen creado correctamente');
         } catch (\Throwable $th) {
             return response()->json([$th->getMessage(), $th->getLine()]);
@@ -46,30 +46,36 @@ class RegimeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\regime  $regime
+     * @param  \App\Models\Regime  $Regime
      * @return \Illuminate\Http\Response
      */
-    public function show(regime $regime)
+    public function show($id)
     {
-        //
+        try{
+            $Regime = Regime::findOrFail($id);
+            // return response()->json( $administrator);
+            return Regime::with('regimeTecnicNote')->find(1);
+        }catch(\Throwable $th){
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\regime  $regime
+     * @param  \App\Models\Regime  $Regime
      * @return \Illuminate\Http\Response
      */
-    public function edit(regime $regime)
+    public function edit(Regime $Regime)
     {
-        $regime = regime::findOrFail($id);
+        $Regime = Regime::findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\regime  $regime
+     * @param  \App\Models\Regime  $Regime
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -77,11 +83,11 @@ class RegimeController extends Controller
         try{
 
        
-            $regime = regime::findOrFail($id);
-            $regime->name = $request->name;
-            $regime->description = $request->description;
+            $Regime = Regime::findOrFail($id);
+            $Regime->name = $request->name;
+            $Regime->description = $request->description;
             
-            $regime->save();
+            $Regime->save();
             return response()->json('Regimen actualizado correctamente');
             
          }catch(\Throwable $th){
@@ -92,14 +98,14 @@ class RegimeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\regime  $regime
+     * @param  \App\Models\Regime  $Regime
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         try{
-            $regime = regime::findOrFail($id);
-            $regime->delete();
+            $Regime = Regime::findOrFail($id);
+            $Regime->delete();
             return response()->json('Regimen eliminado correctamente');
         }catch(\Throwable $th){
             return response()->json([$th->getMessage(), $th->getLine()]);

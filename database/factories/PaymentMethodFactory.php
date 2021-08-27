@@ -12,7 +12,7 @@ class PaymentMethodFactory extends Factory
      *
      * @var string
      */
-    protected $model = payment_method::class;
+    protected $model = PaymentMethod::class;
 
     /**
      * Define the model's default state.

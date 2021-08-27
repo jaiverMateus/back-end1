@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\tecnic_note_cup;
+use App\Models\TecnicNoteCup;
 use Illuminate\Http\Request;
 
 class TecnicNoteCupController extends Controller
@@ -14,7 +14,7 @@ class TecnicNoteCupController extends Controller
      */
     public function index()
     {
-        return tecnic_note_cup::all();
+        return TecnicNoteCup::all();
     }
 
     /**
@@ -36,7 +36,7 @@ class TecnicNoteCupController extends Controller
     public function store(Request $request)
     {
         try {
-            tecnic_note_cup::create($request->all());
+            TecnicNoteCup::create($request->all());
             return response()->json('Nota tecnica cup creada correctamente');
         } catch (\Throwable $th) {
             return response()->json([$th->getMessage(), $th->getLine()]);
@@ -46,30 +46,36 @@ class TecnicNoteCupController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\tecnic_note_cup  $tecnic_note_cup
+     * @param  \App\Models\TecnicNoteCup  $TecnicNoteCup
      * @return \Illuminate\Http\Response
      */
-    public function show(tecnic_note_cup $tecnic_note_cup)
+    public function show($id)
     {
-        //
+        try{
+            $TecnicNoteCup = TecnicNoteCup::findOrFail($id);
+            // return response()->json( $administrator);
+            return TecnicNoteCup::with('cup','tecnic_note')->find(3);
+        }catch(\Throwable $th){
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\tecnic_note_cup  $tecnic_note_cup
+     * @param  \App\Models\TecnicNoteCup  $TecnicNoteCup
      * @return \Illuminate\Http\Response
      */
-    public function edit(tecnic_note_cup $tecnic_note_cup)
+    public function edit(TecnicNoteCup $TecnicNoteCup)
     {
-        $tecnic_note_cup = tecnic_note_cup::findOrFail($id);
+        $TecnicNoteCup = TecnicNoteCup::findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\tecnic_note_cup  $tecnic_note_cup
+     * @param  \App\Models\TecnicNoteCup  $TecnicNoteCup
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -77,8 +83,8 @@ class TecnicNoteCupController extends Controller
         try{
 
        
-            $tecnic_note_cup = tecnic_note_cup::findOrFail($id);
-            $tecnic_note_cup->update($request->all());
+            $TecnicNoteCup = TecnicNoteCup::findOrFail($id);
+            $TecnicNoteCup->update($request->all());
             
             return response()->json('cup nota tecnica actualizado correctamente');
             
@@ -90,14 +96,14 @@ class TecnicNoteCupController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\tecnic_note_cup  $tecnic_note_cup
+     * @param  \App\Models\TecnicNoteCup  $TecnicNoteCup
      * @return \Illuminate\Http\Response
      */
-    public function destroy(tecnic_note_cup $tecnic_note_cup)
+    public function destroy(TecnicNoteCup $TecnicNoteCup)
     {
         try{
-            $tecnic_note_cup = tecnic_note_cup::findOrFail($id);
-            $tecnic_note_cup->delete();
+            $TecnicNoteCup = TecnicNoteCup::findOrFail($id);
+            $TecnicNoteCup->delete();
             return response()->json('Cup nota tecnica eliminado correctamente');
         }catch(\Throwable $th){
             return response()->json([$th->getMessage(), $th->getLine()]);

@@ -37,3 +37,8 @@ Route::resource('/cup',CupController::class);
 Route::resource('/regime',RegimeController::class);
 Route::resource('/tecnic_note_cup',TecnicNoteCupController::class);
 Route::resource('/regime_tecnic_note',RegimeTecnicNoteController::class);
+Route::get('/contracts/getAdministratorType/{type}',[ContractController::class,'getAdministratorType']);
+Route::get('/contracts/getPaymentMethod/{id}',[ContractController::class,'getPaymentMethod']);
+Route::get('/contracts/getBenefitsPlan/{id}',[ContractController::class,'getBenefitsPlan']);
+Route::get('/contracts/getPriceList/{id}',[ContractController::class,'getPriceList']);
+Route::get('/contracts/getContractType/{contract_type}',[ContractController::class,'getContractType']);

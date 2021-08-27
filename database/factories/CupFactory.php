@@ -12,7 +12,7 @@ class CupFactory extends Factory
      *
      * @var string
      */
-    protected $model = cup::class;
+    protected $model = Cup::class;
 
     /**
      * Define the model's default state.

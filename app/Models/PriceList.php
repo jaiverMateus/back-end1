@@ -5,16 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class payment_method extends Model
+class PriceList extends Model
 {
     use HasFactory;
 
     protected $fillable=[
-        'name',
-        'description'
-    ];
+        'cup_id',
+        'cum',
+        'price'
+    ];   
 
     public function contracts(){
         return $this->hasMany(Contract::class);
+    }
+
+    public function cup(){
+        return $this->belongsTo(Cup::class);
     }
 }

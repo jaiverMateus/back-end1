@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\price_list;
+use App\Models\PriceList;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PriceListFactory extends Factory
@@ -12,7 +12,7 @@ class PriceListFactory extends Factory
      *
      * @var string
      */
-    protected $model = price_list::class;
+    protected $model = PriceList::class;
 
     /**
      * Define the model's default state.

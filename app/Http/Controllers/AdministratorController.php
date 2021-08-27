@@ -52,12 +52,16 @@ class AdministratorController extends Controller
      * @param  \App\Models\Administrator  $administrator
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
+      
+
+          
+        
         try{
             $administrator = Administrator::findOrFail($id);
             // return response()->json( $administrator);
-            return Administrator::with('contracts')->find(2);
+            return Administrator::with('contracts')->find('ARL');
         }catch(\Throwable $th){
             return response()->json([$th->getMessage(), $th->getLine()]);
         }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\payment_method;
+use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 
 class PaymentMethodController extends Controller
@@ -14,7 +14,7 @@ class PaymentMethodController extends Controller
      */
     public function index()
     {
-        return payment_method::all();
+        return PaymentMethod::all();
     }
 
     /**
@@ -36,7 +36,7 @@ class PaymentMethodController extends Controller
     public function store(Request $request)
     {
         try {
-            payment_method::create($request->all());
+            PaymentMethod::create($request->all());
             return response()->json('Modalidad de pago creada correctamente');
         } catch (\Throwable $th) {
             return response()->json([$th->getMessage(), $th->getLine()]);
@@ -46,30 +46,36 @@ class PaymentMethodController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\payment_method  $payment_method
+     * @param  \App\Models\PaymentMethod  $PaymentMethod
      * @return \Illuminate\Http\Response
      */
-    public function show(payment_method $payment_method)
+    public function show($id)
     {
-        //
+        try{
+            $PaymentMethod = PaymentMethod::findOrFail($id);
+            // return response()->json( $administrator);
+            return PaymentMethod::with('contracts')->find(1);
+        }catch(\Throwable $th){
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\payment_method  $payment_method
+     * @param  \App\Models\PaymentMethod  $PaymentMethod
      * @return \Illuminate\Http\Response
      */
-    public function edit(payment_method $payment_method)
+    public function edit(PaymentMethod $PaymentMethod)
     {
-        $payment_method = payment_method::findOrFail($id);
+        $PaymentMethod = PaymentMethod::findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\payment_method  $payment_method
+     * @param  \App\Models\PaymentMethod  $PaymentMethod
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -77,11 +83,11 @@ class PaymentMethodController extends Controller
         try{
 
        
-            $payment_method = payment_method::findOrFail($id);
-            $payment_method->name = $request->name;
-            $payment_method->description = $request->description;
+            $PaymentMethod = PaymentMethod::findOrFail($id);
+            $PaymentMethod->name = $request->name;
+            $PaymentMethod->description = $request->description;
             
-            $payment_method->save();
+            $PaymentMethod->save();
             return response()->json('Modalidad de pago actualizada correctamente');
             
          }catch(\Throwable $th){
@@ -92,14 +98,14 @@ class PaymentMethodController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\payment_method  $payment_method
+     * @param  \App\Models\PaymentMethod  $PaymentMethod
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         try{
-            $payment_method = payment_method::findOrFail($id);
-            $payment_method->delete();
+            $PaymentMethod = PaymentMethod::findOrFail($id);
+            $PaymentMethod->delete();
             return response()->json('Modalida de pago eliminada correctamente');
         }catch(\Throwable $th){
             return response()->json([$th->getMessage(), $th->getLine()]);

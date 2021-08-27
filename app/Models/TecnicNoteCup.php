@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class tecnic_note_cup extends Model
+class TecnicNoteCup extends Model
 {
     use HasFactory;
 
@@ -14,4 +14,12 @@ class tecnic_note_cup extends Model
       'tecnic_note_id'
 
     ];
+
+    public function tecnic_note(){
+      return $this->belongsTo(TecnicNote::class);
+    }
+
+    public function cup(){
+      return $this->belongsTo(Cup::class);
+    }
 }

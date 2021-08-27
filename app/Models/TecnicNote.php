@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class tecnic_note extends Model
+class TecnicNote extends Model
 {
     use HasFactory;
     protected $fillable=[
@@ -15,4 +15,13 @@ class tecnic_note extends Model
            'date',
            'chance'
     ];
+
+    public function tecnicNoteCup(){
+
+        return $this->hasMany(TecnicNoteCup::class);
+    }
+
+    public function regimeTecnicNote(){
+        return $this->hasMany(RegimeTecnicNote::class);
+    }
 }

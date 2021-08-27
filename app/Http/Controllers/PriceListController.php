@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\price_list;
+use App\Models\PriceList;
 use Illuminate\Http\Request;
 
 class PriceListController extends Controller
@@ -14,7 +14,7 @@ class PriceListController extends Controller
      */
     public function index()
     {
-        return price_list::all();
+        return PriceList::all();
     }
 
     /**
@@ -36,7 +36,7 @@ class PriceListController extends Controller
     public function store(Request $request)
     {
         try {
-            price_list::create($request->all());
+            PriceList::create($request->all());
             return response()->json('Lista de precios creada correctamente');
         } catch (\Throwable $th) {
             return response()->json([$th->getMessage(), $th->getLine()]);
@@ -46,21 +46,29 @@ class PriceListController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\price_list  $price_list
+     * @param  \App\Models\PriceList  $PriceList
      * @return \Illuminate\Http\Response
      */
-    public function show(price_list $price_list)
+    public function show($id)
     {
-        $price_list = price_list::findOrFail($id);
+        
+
+        try{
+            $PriceList = PriceList::findOrFail($id);
+            // return response()->json( $administrator);
+            return PriceList::with('contracts','cup')->find(1);
+        }catch(\Throwable $th){
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\price_list  $price_list
+     * @param  \App\Models\PriceList  $PriceList
      * @return \Illuminate\Http\Response
      */
-    public function edit(price_list $price_list)
+    public function edit(PriceList $PriceList)
     {
         //
     }
@@ -69,7 +77,7 @@ class PriceListController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\price_list  $price_list
+     * @param  \App\Models\PriceList  $PriceList
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -77,11 +85,11 @@ class PriceListController extends Controller
         try{
 
        
-            $price_list = price_list::findOrFail($id);
-            $price_list->cup_id = $request->cup_id;
-            $price_list->cum = $request->cum;
-            $price_list->price = $request->price;
-            $price_list->save();
+            $PriceList = PriceList::findOrFail($id);
+            $PriceList->cup_id = $request->cup_id;
+            $PriceList->cum = $request->cum;
+            $PriceList->price = $request->price;
+            $PriceList->save();
             return response()->json('Lista de precios actualizada correctamente');
             
          }catch(\Throwable $th){
@@ -92,14 +100,14 @@ class PriceListController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\price_list  $price_list
+     * @param  \App\Models\PriceList  $PriceList
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         try{
-            $price_list = price_list::findOrFail($id);
-            $price_list->delete();
+            $PriceList = PriceList::findOrFail($id);
+            $PriceList->delete();
             return response()->json('Lista de precios eliminada correctamente');
         }catch(\Throwable $th){
             return response()->json([$th->getMessage(), $th->getLine()]);

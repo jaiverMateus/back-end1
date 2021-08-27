@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\regime_tecnic_note;
+use App\Models\RegimeTecnicNote;
 use Illuminate\Http\Request;
 
 class RegimeTecnicNoteController extends Controller
@@ -14,7 +14,7 @@ class RegimeTecnicNoteController extends Controller
      */
     public function index()
     {
-        return regime_tecnic_note::all();
+        return RegimeTecnicNote::all();
     }
 
     /**
@@ -36,7 +36,7 @@ class RegimeTecnicNoteController extends Controller
     public function store(Request $request)
     {
         try {
-            regime_tecnic_note::create($request->all());
+            RegimeTecnicNote::create($request->all());
             return response()->json('Nota tecnica regimen creado correctamente');
         } catch (\Throwable $th) {
             return response()->json([$th->getMessage(), $th->getLine()]);
@@ -46,30 +46,36 @@ class RegimeTecnicNoteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\regime_tecnic_note  $regime_tecnic_note
+     * @param  \App\Models\RegimeTecnicNote  $RegimeTecnicNote
      * @return \Illuminate\Http\Response
      */
-    public function show(regime_tecnic_note $regime_tecnic_note)
+    public function show($id)
     {
-        //
+        try{
+            $RegimeTecnicNote = RegimeTecnicNote::findOrFail($id);
+            // return response()->json( $administrator);
+            return RegimeTecnicNote::with('regime','tecnic_note')->find(1);
+        }catch(\Throwable $th){
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\regime_tecnic_note  $regime_tecnic_note
+     * @param  \App\Models\RegimeTecnicNote  $RegimeTecnicNote
      * @return \Illuminate\Http\Response
      */
-    public function edit(regime_tecnic_note $regime_tecnic_note)
+    public function edit(RegimeTecnicNote $RegimeTecnicNote)
     {
-        $regime_tecnic_note = regime_tecnic_note::findOrFail($id);
+        $RegimeTecnicNote = RegimeTecnicNote::findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\regime_tecnic_note  $regime_tecnic_note
+     * @param  \App\Models\RegimeTecnicNote  $RegimeTecnicNote
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -77,8 +83,8 @@ class RegimeTecnicNoteController extends Controller
         try{
 
        
-            $regime_tecnic_note = regime_tecnic_note::findOrFail($id);
-            $regime_tecnic_note->update($request->all());
+            $RegimeTecnicNote = RegimeTecnicNote::findOrFail($id);
+            $RegimeTecnicNote->update($request->all());
             // $administrator->name = $request->name;
             // $administrator->number = $request->number;
             // $administrator->type = $request->type;
@@ -93,14 +99,14 @@ class RegimeTecnicNoteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\regime_tecnic_note  $regime_tecnic_note
+     * @param  \App\Models\RegimeTecnicNote  $RegimeTecnicNote
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         try{
-            $regime_tecnic_note = regime_tecnic_note::findOrFail($id);
-            $regime_tecnic_note->delete();
+            $RegimeTecnicNote = RegimeTecnicNote::findOrFail($id);
+            $RegimeTecnicNote->delete();
             return response()->json('Nota tecnica regimen eliminado correctamente');
         }catch(\Throwable $th){
             return response()->json([$th->getMessage(), $th->getLine()]);

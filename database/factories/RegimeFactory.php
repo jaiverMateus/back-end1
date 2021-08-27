@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\regime;
+use App\Models\Regime;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RegimeFactory extends Factory
@@ -12,7 +12,7 @@ class RegimeFactory extends Factory
      *
      * @var string
      */
-    protected $model = regime::class;
+    protected $model = Regime::class;
 
     /**
      * Define the model's default state.

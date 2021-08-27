@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\benefits_plan;
+use App\Models\BenefitsPlan;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BenefitsPlanFactory extends Factory
@@ -12,7 +12,7 @@ class BenefitsPlanFactory extends Factory
      *
      * @var string
      */
-    protected $model = benefits_plan::class;
+    protected $model = BenefitsPlan::class;
 
     /**
      * Define the model's default state.
