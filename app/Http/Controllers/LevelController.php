@@ -16,7 +16,7 @@ class LevelController extends Controller
      */
     public function index()
     {
-        return $this->success(Level::get(['name As text', 'id As value']));
+        return  $this->success(Level::get(['name As text', 'id As value']));
     }
 
     /**
