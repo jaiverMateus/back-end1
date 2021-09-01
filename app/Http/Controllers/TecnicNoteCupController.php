@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\TecnicNoteCup;
+use App\Models\Cup;
+use App\Models\TecnicNote;
 use Illuminate\Http\Request;
 
 class TecnicNoteCupController extends Controller
@@ -49,6 +51,24 @@ class TecnicNoteCupController extends Controller
      * @param  \App\Models\TecnicNoteCup  $TecnicNoteCup
      * @return \Illuminate\Http\Response
      */
+
+     public function getTecnicNoteCupCUPId($id){
+        try{
+            
+            return Cup::with('tecnicNoteCup')->Where('id',$id)->get();         
+        }catch(\Throwable $th){
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
+     }
+
+     public function getTecnicNoteCupTecnicId($id){
+        try{
+            
+            return TecnicNote::with('tecnicNoteCup')->Where('id',$id)->get();         
+        }catch(\Throwable $th){
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
+     }
     public function show($id)
     {
         try{
@@ -66,7 +86,7 @@ class TecnicNoteCupController extends Controller
      * @param  \App\Models\TecnicNoteCup  $TecnicNoteCup
      * @return \Illuminate\Http\Response
      */
-    public function edit(TecnicNoteCup $TecnicNoteCup)
+    public function edit(TecnicNoteCup $TecnicNoteCup, $id)
     {
         $TecnicNoteCup = TecnicNoteCup::findOrFail($id);
     }
@@ -99,7 +119,7 @@ class TecnicNoteCupController extends Controller
      * @param  \App\Models\TecnicNoteCup  $TecnicNoteCup
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TecnicNoteCup $TecnicNoteCup)
+    public function destroy(TecnicNoteCup $TecnicNoteCup, $id)
     {
         try{
             $TecnicNoteCup = TecnicNoteCup::findOrFail($id);

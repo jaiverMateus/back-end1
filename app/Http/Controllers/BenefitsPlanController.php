@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\BenefitsPlan;
+use App\Models\Contract;
+
 use Illuminate\Http\Request;
 
 class BenefitsPlanController extends Controller
@@ -49,6 +51,17 @@ class BenefitsPlanController extends Controller
      * @param  \App\Models\BenefitsPlan  $BenefitsPlan
      * @return \Illuminate\Http\Response
      */
+
+     public function getBenefitPlanContractId($id){
+        try{
+            
+            return Contract::with('benefitsPlan')->Where('id',$id)->get();         
+        }catch(\Throwable $th){
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
+     }
+
+     
     public function show($id)
     {
         try{

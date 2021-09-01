@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\TecnicNote;
+use App\Models\TecnicNoteCup;
+
 use Illuminate\Http\Request;
 
 class TecnicNoteController extends Controller
@@ -49,6 +51,15 @@ class TecnicNoteController extends Controller
      * @param  \App\Models\TecnicNote  $TecnicNote
      * @return \Illuminate\Http\Response
      */
+
+     public function getTecnicNoteCupId($id){
+        try{
+            
+            return TecnicNoteCup::with('tecnic_note')->Where('id',$id)->get();         
+        }catch(\Throwable $th){
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
+     }
     public function show($id)
     {
         try{
@@ -68,7 +79,7 @@ class TecnicNoteController extends Controller
      */
     public function edit(TecnicNote $TecnicNote)
     {
-        $TecnicNote = TecnicNote::findOrFail($id);
+        
     }
 
     /**

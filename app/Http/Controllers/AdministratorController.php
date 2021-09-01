@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Administrator;
+use App\Models\Contract;
 use Illuminate\Http\Request;
 
 
@@ -52,12 +53,22 @@ class AdministratorController extends Controller
      * @param  \App\Models\Administrator  $administrator
      * @return \Illuminate\Http\Response
      */
+
+     public function getContractId(Request $request,$id){
+        try{
+            
+            return Contract::with('administrator')->Where('id',$id)->get();         
+        }catch(\Throwable $th){
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
+
+     }
     public function show(Request $request,$id)
     {
       
 
           
-        
+       /*
         try{
             $administrator = Administrator::findOrFail($id);
             // return response()->json( $administrator);
@@ -65,7 +76,7 @@ class AdministratorController extends Controller
         }catch(\Throwable $th){
             return response()->json([$th->getMessage(), $th->getLine()]);
         }
-        
+        */
     }
 
     /**
@@ -74,7 +85,7 @@ class AdministratorController extends Controller
      * @param  \App\Models\Administrator  $administrator
      * @return \Illuminate\Http\Response
      */
-    public function edit(Administrator $administrator)
+    public function edit(Administrator $administrator,$id)
     {
         $administrator = Administrator::findOrFail($id);
     }

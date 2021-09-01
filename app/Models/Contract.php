@@ -24,39 +24,25 @@ class Contract extends Model
         'variation'
     ];
 
-    public function contract($contract_type){
-        
-        if($contract_type){
-
-            return $this->where($contract_type,'like',"%$contract_type%");
-        }
-    }
-     public function administrator($type){
+    
+     public function administrator(){
         return $this->belongsTo(Administrator::class);
-        if($type){
-
-            return $this->where($type,'like',"%$type%");
-        }
     }
 
-    public function payment_method($id){
+    
+
+    public function payment_method(){
         return $this->belongsTo(PaymentMethod::class);
-        if($id){
-            return $this->where($id,'like',"%$id%");
-        }
+        
     }
 
-    public function benefitsPlan($id){
+    public function benefitsPlan(){
         return $this->belongsTo(BenefitsPlan::class);
-        if($id){
-            return $this->where($id,'like',"%$id%");
-        }
+        
     }
 
-    public function priceList($id){
+    public function priceList(){
         return $this->belongsTo(PriceList::class);
-        if($id){
-            return $this->where($id,'like',"%$id%");
-        }
+        
     }
 }

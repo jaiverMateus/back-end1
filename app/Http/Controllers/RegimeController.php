@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Regime;
+use App\Models\TecnicNote;
 use Illuminate\Http\Request;
 
 class RegimeController extends Controller
@@ -49,6 +50,15 @@ class RegimeController extends Controller
      * @param  \App\Models\Regime  $Regime
      * @return \Illuminate\Http\Response
      */
+
+     public function getRegimeTecnicNoteId($id){
+        try{
+            
+            return Regime::with('regimeTecnicNote')->Where('id',$id)->get();         
+        }catch(\Throwable $th){
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
+     }
     public function show($id)
     {
         try{
@@ -68,7 +78,7 @@ class RegimeController extends Controller
      */
     public function edit(Regime $Regime)
     {
-        $Regime = Regime::findOrFail($id);
+       
     }
 
     /**

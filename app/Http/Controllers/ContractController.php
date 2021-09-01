@@ -18,28 +18,7 @@ class ContractController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $contract = Contract::query();
-
-        $contract->when(request()->get('department_id'), function (Builder $q) {
-            $q->where('department_id', request()->get('department_id'));
-        });
-
-        $contract->when(request()->get('eps_id'), function (Builder $q) {
-            $q->where(function (Builder $q) {
-                $q->where('administrator_id', request()->get('eps_id'))
-                    ->orWhere('regimen_id', request()->get('regimen_id'));
-            });
-        });
-
-        $contract->when(request()->get('company_id'), function (Builder $q) {
-            $q->where('company_id', request()->get('company_id'));
-        });
-
-
-        $result = $contract->get(['name As text', 'id As value']);
-
-        return $this->success($result);
+    { 
     }
 
     /**
@@ -153,7 +132,7 @@ class ContractController extends Controller
      */
     public function edit(Contract $contract)
     {
-        $contract = Contract::findOrFail($id);
+        
     }
 
     /**
@@ -171,13 +150,13 @@ class ContractController extends Controller
        $contract = Contract::findOrFail($id);
        $contract->name = $request->name;
        $contract->number = $request->number;
-       $contract->code=$reques->code;
+       $contract->code=$request->code;
        $contract->administrator_id = $request->administrator_id;
        $contract->contract_type=$request->contract_type;
        $contract->payment_method_id=$request->payment_method_id;
-       $contract->benefit_plan_id=$request->benefit_plan_id;
+       $contract->benefits_plan_id=$request->benefit_plan_id;
        $contract->start_date = $request->start_date;
-       $contract->end_date=$reques->end_date;
+       $contract->end_date=$request->end_date;
        $contract->policy = $request->policy;
        $contract->price=$request->price;
        $contract->price_list_id=$request->price_list_id;

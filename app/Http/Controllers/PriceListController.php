@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\PriceList;
+use App\Models\Contract;
+use App\Models\Cup;
 use Illuminate\Http\Request;
 
 class PriceListController extends Controller
@@ -49,6 +51,25 @@ class PriceListController extends Controller
      * @param  \App\Models\PriceList  $PriceList
      * @return \Illuminate\Http\Response
      */
+
+     public function getPriceListContractsId($id){
+        try{
+            
+            return Contract::with('priceList')->Where('id',$id)->get();         
+        }catch(\Throwable $th){
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
+     }
+
+     public function getCupId($id){
+        try{
+            
+            return Cup::with('priceList')->Where('id',$id)->get();         
+        }catch(\Throwable $th){
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
+
+     }
     public function show($id)
     {
         

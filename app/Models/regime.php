@@ -17,4 +17,6 @@ class regime extends Model
     public function regimeTecnicNote(){
         return $this->hasMany(RegimeTecnicNote::class);
     }
+
+    protected $table = 'regimen_types'; 
 }

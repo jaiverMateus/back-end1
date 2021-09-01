@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cup;
+use App\Models\PriceList;
+use App\Models\TecnicNoteCup;
 use Illuminate\Http\Request;
 
 class CupController extends Controller
@@ -49,6 +51,22 @@ class CupController extends Controller
      * @param  \App\Models\Cup  $Cup
      * @return \Illuminate\Http\Response
      */
+    public function getCUPPriceListId($id){
+        try{
+            
+            return PriceList::with('cup')->Where('id',$id)->get();         
+        }catch(\Throwable $th){
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
+    }
+    public function getTecnicNoteCupId($id){
+        try{
+            
+            return TecnicNoteCup::with('cup')->Where('id',$id)->get();         
+        }catch(\Throwable $th){
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
+    }
     public function show($id)
     {
         try{

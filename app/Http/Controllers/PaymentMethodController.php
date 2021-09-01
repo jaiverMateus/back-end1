@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PaymentMethod;
+use App\Models\Contract;
 use Illuminate\Http\Request;
 
 class PaymentMethodController extends Controller
@@ -49,6 +50,15 @@ class PaymentMethodController extends Controller
      * @param  \App\Models\PaymentMethod  $PaymentMethod
      * @return \Illuminate\Http\Response
      */
+
+     public function getPaymentMethodContractId($id){
+        try{
+            
+            return Contract::with('payment_method')->Where('id',$id)->get();         
+        }catch(\Throwable $th){
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
+     }
     public function show($id)
     {
         try{
@@ -68,7 +78,7 @@ class PaymentMethodController extends Controller
      */
     public function edit(PaymentMethod $PaymentMethod)
     {
-        $PaymentMethod = PaymentMethod::findOrFail($id);
+        
     }
 
     /**

@@ -19,10 +19,10 @@ class Administrator extends Model
      public function contracts(){
 
         return $this->hasMany(Contract::class);
+         
+       // if($id){
 
-        // if($type){
-
-        //     return $this->Where($type,'like',"%$type%");
+          //   return $this->where($id,'like',"%$id%");
         // }
     }
 }
