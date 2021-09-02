@@ -51,6 +51,7 @@ class CreatePeopleTable extends Migration
             $table->integer('department_id')->nullable();
             $table->integer('municipality_id')->nullable();
             $table->string('external_id')->nullable();
+            $table->string('rol')->nullable();
             $table->string('date_last_session', 20)->nullable();
             $table->timestamps();
         });

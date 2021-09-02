@@ -2,30 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\SedeResource;
-use App\Models\Location;
 use App\Traits\ApiResponser;
+use App\Models\TypeDocument;
 use Illuminate\Http\Request;
 
-class LocationController extends Controller
+class TypeDocumentController extends Controller
 {
-
     use ApiResponser;
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    // ${this.company}/${this.subappointment.procedure
-
     public function index()
     {
-        // return response()->json('jghkghj');
-        return SedeResource::collection(
-            Location::where('company_id', request()->get('company'))->get(['id', 'name'])
-        );
+        return $this->success(TypeDocument::get(['name As text', 'id As value']));
     }
 
     /**
@@ -47,9 +38,8 @@ class LocationController extends Controller
     public function store(Request $request)
     {
         try {
-            $location  = Location::create($request->all());
-            return $this->success(['message' => 'Sede creada correctamente', 'model' => $location]);
-            // return response()->json('Sede creada correctamente');
+            $typeDocument = TypeDocument::create($request->all());
+            return $this->success(['message' => 'Documento creado correctamente', 'model' => $typeDocument]);
         } catch (\Throwable $th) {
             return response()->json([$th->getMessage(), $th->getLine()]);
         }
@@ -58,10 +48,10 @@ class LocationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  App\Models\Location  $sede
+     * @param  \App\TypeDocument  $typeDocument
      * @return \Illuminate\Http\Response
      */
-    public function show(Location $sede)
+    public function show(TypeDocument $typeDocument)
     {
         //
     }
@@ -69,10 +59,10 @@ class LocationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  App\Models\Location  $sede
+     * @param  \App\TypeDocument  $typeDocument
      * @return \Illuminate\Http\Response
      */
-    public function edit(Location $sede)
+    public function edit(TypeDocument $typeDocument)
     {
         //
     }
@@ -81,15 +71,15 @@ class LocationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  App\Models\Location  $sede
+     * @param  \App\TypeDocument  $typeDocument
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Location $sede)
+    public function update(Request $request, TypeDocument $typeDocument)
     {
         try {
-            $sede = Location::find(request()->get('id'));
-            $sede->update(request()->all());
-            return $this->success('Sede actualizado correctamente');
+            $typeDocument = TypeDocument::find(request()->get('id'));
+            $typeDocument->update(request()->all());
+            return $this->success('Documento actualizado correctamente');
         } catch (\Throwable $th) {
             return response()->json([$th->getMessage(), $th->getLine()]);
         }
@@ -98,15 +88,15 @@ class LocationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  App\Models\Location  $sede
+     * @param  \App\TypeDocument  $typeDocument
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         try {
-            $sede = Location::findOrFail($id);
-            $sede->delete();
-            return $this->success('Sede eliminada correctamente', 204);
+            $typeDocument = TypeDocument::findOrFail($id);
+            $typeDocument->delete();
+            return $this->success('Documento eliminado correctamente', 204);
         } catch (\Throwable $th) {
             return response()->json([$th->getMessage(), $th->getLine()]);
         }

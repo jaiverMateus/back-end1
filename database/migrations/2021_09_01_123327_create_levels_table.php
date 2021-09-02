@@ -22,6 +22,7 @@ class CreateLevelsTable extends Migration
             $table->integer('regimen_id')->nullable();
             $table->integer('type')->nullable();
             $table->integer('cuote_max')->nullable();
+            $table->timestamps();
         });
     }
 

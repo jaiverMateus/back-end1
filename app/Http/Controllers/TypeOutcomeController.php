@@ -2,30 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\SedeResource;
-use App\Models\Location;
-use App\Traits\ApiResponser;
+use App\Models\TypeOutcome;
 use Illuminate\Http\Request;
 
-class LocationController extends Controller
+class TypeOutcomeController extends Controller
 {
-
-    use ApiResponser;
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    // ${this.company}/${this.subappointment.procedure
-
     public function index()
     {
-        // return response()->json('jghkghj');
-        return SedeResource::collection(
-            Location::where('company_id', request()->get('company'))->get(['id', 'name'])
-        );
+        //
     }
 
     /**
@@ -47,8 +36,8 @@ class LocationController extends Controller
     public function store(Request $request)
     {
         try {
-            $location  = Location::create($request->all());
-            return $this->success(['message' => 'Sede creada correctamente', 'model' => $location]);
+            $typeOutcome  = TypeOutcome::create($request->all());
+            return $this->success(['message' => 'Tipo de egreso creado correctamente', 'model' => $typeOutcome]);
             // return response()->json('Sede creada correctamente');
         } catch (\Throwable $th) {
             return response()->json([$th->getMessage(), $th->getLine()]);
@@ -58,10 +47,10 @@ class LocationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  App\Models\Location  $sede
+     * @param  \App\Models\TypeOutcome  $typeOutcome
      * @return \Illuminate\Http\Response
      */
-    public function show(Location $sede)
+    public function show(TypeOutcome $typeOutcome)
     {
         //
     }
@@ -69,10 +58,10 @@ class LocationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  App\Models\Location  $sede
+     * @param  \App\Models\TypeOutcome  $typeOutcome
      * @return \Illuminate\Http\Response
      */
-    public function edit(Location $sede)
+    public function edit(TypeOutcome $typeOutcome)
     {
         //
     }
@@ -81,15 +70,15 @@ class LocationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  App\Models\Location  $sede
+     * @param  \App\Models\TypeOutcome  $typeOutcome
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Location $sede)
+    public function update(Request $request, TypeOutcome $typeOutcome)
     {
         try {
-            $sede = Location::find(request()->get('id'));
-            $sede->update(request()->all());
-            return $this->success('Sede actualizado correctamente');
+            $typeOutcome = TypeOutcome::find(request()->get('id'));
+            $typeOutcome->update(request()->all());
+            return $this->success('Tipo de egreso actualizado correctamente');
         } catch (\Throwable $th) {
             return response()->json([$th->getMessage(), $th->getLine()]);
         }
@@ -98,15 +87,15 @@ class LocationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  App\Models\Location  $sede
+     * @param  \App\Models\TypeOutcome  $typeOutcome
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         try {
-            $sede = Location::findOrFail($id);
-            $sede->delete();
-            return $this->success('Sede eliminada correctamente', 204);
+            $typeOutcome = TypeOutcome::findOrFail($id);
+            $typeOutcome->delete();
+            return $this->success('Tipo de egreso eliminado correctamente', 204);
         } catch (\Throwable $th) {
             return response()->json([$th->getMessage(), $th->getLine()]);
         }

@@ -17,6 +17,15 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\PersonController;
+use App\Http\Controllers\TypeDocumentController;
+use App\Http\Controllers\TypeServiceController;
+use App\Http\Controllers\TypeAgendaController;
+use App\Http\Controllers\TypeQueryController;
+use App\Http\Controllers\TypeInComeController;
+use App\Http\Controllers\TypeOutComeController;
+use App\Http\Controllers\TypeNoveltyController;
+use App\Http\Controllers\TypeRetentionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +62,18 @@ Route::resource('/specialities',SpecialityController::class,['except'=>['update'
 Route::put('/specialities/update',[SpecialityController::class,'update']);
 Route::resource('/levels',LevelController::class,['except' =>['update']]);
 Route::put('/levels/update',[LevelController::class,'update']);
+Route::resource('/people',PersonController::class,['except'=>['update']]);
+Route::put('/people/update',[PersonController::class,'update']);
+Route::resource('/type_documents',TypeDocumentController::class,['except' =>['update']]);
+Route::put('/type_documents/update',[TypeDocumentController::class,'update']);
+Route::resource('/type_services',TypeServiceController::class,['except'=>['update']]);
+Route::put('/type_services/update',[TypeServiceController::class,'update']);
+Route::resource('/type_agendas',TypeAgendaController::class);
+Route::resource('/type_queries',TypeQueryController::class);
+Route::resource('/type_incomes',TypeInComeController::class);
+Route::resource('/type_outcomes',TypeOutComeController::class);
+Route::resource('/type_novelties',TypeNoveltyController::class);
+Route::resource('/type_retentions',TypeRetentionController::class);
 Route::get('/contracts/getAdministratorType/{type}', [ContractController::class, 'getAdministratorType']);
 Route::get('/contracts/getPaymentMethod/{id}', [ContractController::class, 'getPaymentMethod']);
 Route::get('/contracts/getBenefitsPlan/{id}', [ContractController::class, 'getBenefitsPlan']);
