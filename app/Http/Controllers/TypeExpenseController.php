@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\TypeExpense;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class TypeExpenseController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,7 @@ class TypeExpenseController extends Controller
      */
     public function index()
     {
-        //
+        return $this->success(TypeExpense::get(['name As text', 'id As value']));
     }
 
     /**
@@ -35,7 +37,14 @@ class TypeExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        try {
+            $typeExpense  = TypeExpense::create($request->all());
+            return $this->success(['message' => 'Tipo de gasto creado correctamente', 'model' => $typeExpense]);
+            // return response()->json('Sede creada correctamente');
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
@@ -69,7 +78,13 @@ class TypeExpenseController extends Controller
      */
     public function update(Request $request, TypeExpense $typeExpense)
     {
-        //
+        try {
+            $typeExpense = TypeExpense::find(request()->get('id'));
+            $typeExpense->update(request()->all());
+            return $this->success('Tipo de gasto actualizado correctamente');
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
@@ -78,8 +93,14 @@ class TypeExpenseController extends Controller
      * @param  \App\Models\TypeExpense  $typeExpense
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TypeExpense $typeExpense)
+    public function destroy($id)
     {
-        //
+        try {
+            $typeExpense = TypeExpense::findOrFail($id);
+            $typeExpense->delete();
+            return $this->success('Tipo de gasto eliminado correctamente', 204);
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 }

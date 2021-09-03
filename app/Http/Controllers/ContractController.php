@@ -7,11 +7,13 @@ use App\Models\Administrator;
 use App\Models\PaymentMethod;
 use App\Models\BenefitsPlan;
 use App\Models\PriceList;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 
 class ContractController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -19,6 +21,11 @@ class ContractController extends Controller
      */
     public function index()
     { 
+        $data = Contract::when(Request()->get('location_id'), function ($q, $id) {
+            //$q->where('location_id', '=', $id);
+        })->get(['contract_name As text', 'id As value']);
+
+        return $this->success($data);
     }
 
     /**

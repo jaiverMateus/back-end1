@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\TypePqrs;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class TypePqrsController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,7 @@ class TypePqrsController extends Controller
      */
     public function index()
     {
-        //
+        return $this->success(TypePqrs::get(['name As text', 'id As value']));
     }
 
     /**
@@ -35,7 +37,14 @@ class TypePqrsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        try {
+            $typePqrs  = TypePqrs::create($request->all());
+            return $this->success(['message' => 'Tipo de PQRS creado correctamente', 'model' => $typePqrs]);
+            // return response()->json('Sede creada correctamente');
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
@@ -69,7 +78,13 @@ class TypePqrsController extends Controller
      */
     public function update(Request $request, TypePqrs $typePqrs)
     {
-        //
+        try {
+            $typePqrs = TypePqrs::find(request()->get('id'));
+            $typePqrs->update(request()->all());
+            return $this->success('Tipo de PQRS actualizado correctamente');
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
@@ -78,8 +93,14 @@ class TypePqrsController extends Controller
      * @param  \App\Models\TypePqrs  $typePqrs
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TypePqrs $typePqrs)
+    public function destroy($id)
     {
-        //
+        try {
+            $typePqrs = TypePqrs::findOrFail($id);
+            $typePqrs->delete();
+            return $this->success('Tipo de PQRS eliminado correctamente', 204);
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 }

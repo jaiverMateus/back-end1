@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\TypeIncome;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class TypeIncomeController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,7 @@ class TypeIncomeController extends Controller
      */
     public function index()
     {
-        //
+        return $this->success(TypeIncome::get(['name As text', 'id As value']));
     }
 
     /**

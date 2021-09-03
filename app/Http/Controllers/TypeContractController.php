@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\TypeContract;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class TypeContractController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,7 @@ class TypeContractController extends Controller
      */
     public function index()
     {
-        //
+        return $this->success(TypeContract::get(['name As text', 'id As value']));
     }
 
     /**
@@ -35,7 +37,14 @@ class TypeContractController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        try {
+            $typeContract  = TypeContract::create($request->all());
+            return $this->success(['message' => 'Tipo de contrato creado correctamente', 'model' => $typeContract]);
+            // return response()->json('Sede creada correctamente');
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
@@ -69,7 +78,13 @@ class TypeContractController extends Controller
      */
     public function update(Request $request, TypeContract $typeContract)
     {
-        //
+        try {
+            $typeContract = TypeContract::find(request()->get('id'));
+            $typeContract->update(request()->all());
+            return $this->success('Tipo de contrato actualizado correctamente');
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
@@ -78,8 +93,14 @@ class TypeContractController extends Controller
      * @param  \App\Models\TypeContract  $typeContract
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TypeContract $typeContract)
+    public function destroy($id)
     {
-        //
+        try {
+            $typeContract = TypeContract::findOrFail($id);
+            $typeContract->delete();
+            return $this->success('Tipo de contrato eliminado correctamente', 204);
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 }

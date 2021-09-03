@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\TypeQuery;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class TypeQueryController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,7 @@ class TypeQueryController extends Controller
      */
     public function index()
     {
-        //
+        return $this->success(TypeQuery::get(['name As text', 'id As value']));
     }
 
     /**

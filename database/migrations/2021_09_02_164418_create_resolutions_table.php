@@ -15,6 +15,7 @@ class CreateResolutionsTable extends Migration
     {
         Schema::create('resolutions', function (Blueprint $table) {
             $table->id();
+            
             $table->timestamps();
         });
     }

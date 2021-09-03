@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\TypeRisk;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class TypeRiskController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,7 @@ class TypeRiskController extends Controller
      */
     public function index()
     {
-        //
+        return $this->success(TypeRisk::get(['name As text', 'id As value']));
     }
 
     /**
@@ -35,7 +37,13 @@ class TypeRiskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $typeRisk  = TypeRisk::create($request->all());
+            return $this->success(['message' => 'Tipo de riesgo creado correctamente', 'model' => $typeRisk]);
+            // return response()->json('Sede creada correctamente');
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
@@ -69,7 +77,13 @@ class TypeRiskController extends Controller
      */
     public function update(Request $request, TypeRisk $typeRisk)
     {
-        //
+        try {
+            $typeRisk = TypeRisk::find(request()->get('id'));
+            $typeRisk->update(request()->all());
+            return $this->success('Tipo de riesgo actualizado correctamente');
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
@@ -78,8 +92,14 @@ class TypeRiskController extends Controller
      * @param  \App\Models\TypeRisk  $typeRisk
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TypeRisk $typeRisk)
+    public function destroy($id)
     {
-        //
+        try {
+            $typeRisk = TypeRisk::findOrFail($id);
+            $typeRisk->delete();
+            return $this->success('Tipo de riesgo eliminada correctamente', 204);
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 }

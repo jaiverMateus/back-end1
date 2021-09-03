@@ -26,6 +26,23 @@ use App\Http\Controllers\TypeInComeController;
 use App\Http\Controllers\TypeOutComeController;
 use App\Http\Controllers\TypeNoveltyController;
 use App\Http\Controllers\TypeRetentionController;
+use App\Http\Controllers\TypeExpenseController;
+use App\Http\Controllers\TypeRiskController;
+use App\Http\Controllers\TypeSalaryController;
+use App\Http\Controllers\TypeContractController;
+use App\Http\Controllers\TypePqrsController;
+use App\Http\Controllers\NonPaymentCausalController;
+use App\Http\Controllers\AppointmentCancellationCausalController;
+use App\Http\Controllers\CancellationCausalController;
+use App\Http\Controllers\TypeFixedAssetController;
+use App\Http\Controllers\TypeReturnController;
+use App\Http\Controllers\TypeGlossyController;
+use App\Http\Controllers\RegimenAndLevelController;
+use App\Http\Controllers\DependenceController;
+use App\Http\Controllers\ResolutionController;
+use App\Http\Controllers\ChargeController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -64,16 +81,58 @@ Route::resource('/levels',LevelController::class,['except' =>['update']]);
 Route::put('/levels/update',[LevelController::class,'update']);
 Route::resource('/people',PersonController::class,['except'=>['update']]);
 Route::put('/people/update',[PersonController::class,'update']);
+
+
+
 Route::resource('/type_documents',TypeDocumentController::class,['except' =>['update']]);
 Route::put('/type_documents/update',[TypeDocumentController::class,'update']);
 Route::resource('/type_services',TypeServiceController::class,['except'=>['update']]);
 Route::put('/type_services/update',[TypeServiceController::class,'update']);
-Route::resource('/type_agendas',TypeAgendaController::class);
-Route::resource('/type_queries',TypeQueryController::class);
-Route::resource('/type_incomes',TypeInComeController::class);
-Route::resource('/type_outcomes',TypeOutComeController::class);
-Route::resource('/type_novelties',TypeNoveltyController::class);
-Route::resource('/type_retentions',TypeRetentionController::class);
+Route::resource('/type_agendas',TypeAgendaController::class,['except'=>['update']]);
+Route::put('/type_agendas/update',[TypeAgendaController::class,'update']);
+Route::resource('/type_queries',TypeQueryController::class,['except'=>['update']]);
+Route::put('/type_queries/update',[TypeQueryController::class,'update']);
+Route::resource('/type_incomes',TypeInComeController::class,['except'=>['update']]);
+Route::put('/type_incomes/update',[TypeInComeController::class,'update']);
+Route::resource('/type_outcomes',TypeOutComeController::class,['except'=>['update']]);
+Route::put('/type_outcomes/update',[TypeOutComeController::class,'update']);
+Route::resource('/type_novelties',TypeNoveltyController::class,['except'=>['update']]);
+Route::put('/type_novelties/update',[TypeNoveltyController::class,'update']);
+Route::resource('/type_retentions',TypeRetentionController::class,['except'=>['update']]);
+Route::put('/type_retentions/update',[TypeRetentionController::class,'update']);
+Route::resource('/type_expenses',TypeExpenseController::class,['except'=>['update']]);
+Route::put('/type_expenses/update',[TypeExpenseController::class,'update']);
+Route::resource('/type_risks',TypeRiskController::class,['except'=>['update']]);
+Route::put('/type_risks/update',[TypeRiskController::class,'update']);
+Route::resource('/type_salaries',TypeSalaryController::class,['except'=>['update']]);
+Route::put('/type_salaries/update',[TypeSalaryController::class,'update']);
+Route::resource('/type_contracts',TypeContractController::class,['except'=>['update']]);
+Route::put('/type_contracts/update',[TypeContractController::class,'update']);
+Route::resource('/type_pqrs',TypePqrsController::class,['except'=>['update']]);
+Route::put('/type_pqrs/update',[TypePqrsController::class,'update']);
+Route::resource('/non_payment_causals',NonPaymentCausalController::class,['except'=>['update']]);
+Route::put('/non_payment_causals/update',[NonPaymentCausalController::class,'update']);
+Route::resource('appointment_cancellation_causal',AppointmentCancellationCausalController::class,['except'=>['update']]);
+Route::put('appointment_cancellation_causal/update',[AppointmentCancellationCausalController::class,'update']);
+Route::resource('/cancellation_causal',CancellationCausalController::class,['except'=>['update']]);
+Route::put('/cancellation_causal/update',[CancellationCausalController::class,'update']);
+Route::resource('/type_fixed_assets',TypeFixedAssetController::class,['except'=>['update']]);
+Route::put('/type_fixed_assets/update',[TypeFixedAssetController::class,'update']);
+Route::resource('/type_returns',TypeReturnController::class,['except'=>['update']]);
+Route::put('/type_returns/update',[TypeReturnController::class,'update']);
+Route::resource('/type_glossies',TypeGlossyController::class,['except'=>['update']]);
+Route::put('/type_glossies/update',[TypeGlossyController::class,'update']);
+Route::resource('/regimen_and_levels',RegimenAndLevelController::class,['except'=>['update']]);
+Route::put('/regimen_and_levels/update',[RegimenAndLevelController::class,'update']);
+
+Route::resource('/dependences',DependenceController::class,['except'=>['update']]);
+Route::put('/dependences/update',[DependenceController::class,'update']);
+Route::resource('/resolutions',ResolutionController::class,['except'=>['update']]);
+Route::put('/resolutions/update',[ResolutionController::class,'update']);
+
+Route::resource('/charges',ChargeController::class,['except'=>['update']]);
+Route::put('/charges/update',[ChargeController::class,'update']);
+
 Route::get('/contracts/getAdministratorType/{type}', [ContractController::class, 'getAdministratorType']);
 Route::get('/contracts/getPaymentMethod/{id}', [ContractController::class, 'getPaymentMethod']);
 Route::get('/contracts/getBenefitsPlan/{id}', [ContractController::class, 'getBenefitsPlan']);

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\TypeNovelty;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class TypeNoveltyController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,7 @@ class TypeNoveltyController extends Controller
      */
     public function index()
     {
-        //
+        return $this->success(TypeNovelty::get(['name As text', 'id As value']));
     }
 
     /**

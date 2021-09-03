@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\NonPaymentCausal;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class NonPaymentCausalController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,7 @@ class NonPaymentCausalController extends Controller
      */
     public function index()
     {
-        //
+        return $this->success(NonPaymentCausal::get(['name As text', 'id As value']));
     }
 
     /**
@@ -35,7 +37,13 @@ class NonPaymentCausalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $nonPaymentCausal  = NonPaymentCausal::create($request->all());
+            return $this->success(['message' => 'Causal de no pago creado correctamente', 'model' => $nonPaymentCausal]);
+            // return response()->json('Sede creada correctamente');
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
@@ -69,7 +77,13 @@ class NonPaymentCausalController extends Controller
      */
     public function update(Request $request, NonPaymentCausal $nonPaymentCausal)
     {
-        //
+        try {
+            $nonPaymentCausal = NonPaymentCausal::find(request()->get('id'));
+            $nonPaymentCausal->update(request()->all());
+            return $this->success('Causal de no pago actualizado correctamente');
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
@@ -78,8 +92,14 @@ class NonPaymentCausalController extends Controller
      * @param  \App\Models\NonPaymentCausal  $nonPaymentCausal
      * @return \Illuminate\Http\Response
      */
-    public function destroy(NonPaymentCausal $nonPaymentCausal)
+    public function destroy($id)
     {
-        //
+        try {
+            $nonPaymentCausal = NonPaymentCausal::findOrFail($id);
+            $nonPaymentCausal->delete();
+            return $this->success(' Causal de no pago eliminado correctamente', 204);
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 }

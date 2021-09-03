@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\TypeOutcome;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class TypeOutcomeController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,7 @@ class TypeOutcomeController extends Controller
      */
     public function index()
     {
-        //
+        return $this->success(TypeOutCome::get(['name As text', 'id As value']));
     }
 
     /**

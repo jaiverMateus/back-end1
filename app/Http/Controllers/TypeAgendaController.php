@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\TypeAgenda;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class TypeAgendaController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,7 @@ class TypeAgendaController extends Controller
      */
     public function index()
     {
-        //
+        return $this->success(TypeAgenda::get(['name As text', 'id As value']));
     }
 
     /**

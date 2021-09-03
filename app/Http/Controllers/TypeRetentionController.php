@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\TypeRetention;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class TypeRetentionController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,7 @@ class TypeRetentionController extends Controller
      */
     public function index()
     {
-        //
+        return $this->success(TypeRetention::get(['name As text', 'id As value']));
     }
 
     /**

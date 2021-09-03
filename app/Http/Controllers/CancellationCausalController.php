@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\CancellationCausal;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class CancellationCausalController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,7 @@ class CancellationCausalController extends Controller
      */
     public function index()
     {
-        //
+        return $this->success(CancellationCausal::get(['name As text', 'id As value']));
     }
 
     /**
@@ -35,7 +37,13 @@ class CancellationCausalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $cancellationCausal  = CancellationCausal::create($request->all());
+            return $this->success(['message' => 'Causal de anulacion creado correctamente', 'model' => $cancellationCausal]);
+            // return response()->json('Sede creada correctamente');
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
@@ -69,7 +77,13 @@ class CancellationCausalController extends Controller
      */
     public function update(Request $request, CancellationCausal $cancellationCausal)
     {
-        //
+        try {
+            $cancellationCausal = CancellationCausal::find(request()->get('id'));
+            $cancellationCausal->update(request()->all());
+            return $this->success('Causal de anulacion actualizado correctamente');
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
@@ -78,8 +92,14 @@ class CancellationCausalController extends Controller
      * @param  \App\Models\CancellationCausal  $cancellationCausal
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CancellationCausal $cancellationCausal)
+    public function destroy($id)
     {
-        //
+        try {
+            $cancellationCausal = CancellationCausal::findOrFail($id);
+            $cancellationCausal->delete();
+            return $this->success('Cusal de anulacion eliminado correctamente', 204);
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 }

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\TypeFixedAsset;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class TypeFixedAssetController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,7 @@ class TypeFixedAssetController extends Controller
      */
     public function index()
     {
-        //
+        return $this->success(TypeFixedAsset::get(['name As text', 'id As value']));
     }
 
     /**
@@ -35,7 +37,13 @@ class TypeFixedAssetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $typeFixedAsset  = TypeFixedAsset::create($request->all());
+            return $this->success(['message' => 'Tipo de activo fijo creado correctamente', 'model' => $typeFixedAsset]);
+            // return response()->json('Sede creada correctamente');
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
@@ -69,7 +77,13 @@ class TypeFixedAssetController extends Controller
      */
     public function update(Request $request, TypeFixedAsset $typeFixedAsset)
     {
-        //
+        try {
+            $typeFixedAsset = TypeFixedAsset::find(request()->get('id'));
+            $typeFixedAsset->update(request()->all());
+            return $this->success('Tipo de activo fijo actualizado correctamente');
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
@@ -78,8 +92,14 @@ class TypeFixedAssetController extends Controller
      * @param  \App\Models\TypeFixedAsset  $typeFixedAsset
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TypeFixedAsset $typeFixedAsset)
+    public function destroy($id)
     {
-        //
+        try {
+            $typeFixedAsset = TypeFixedAsset::findOrFail($id);
+            $typeFixedAsset->delete();
+            return $this->success('Tipo de activo fijo eliminado correctamente', 204);
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 }

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\AppointmentCancellationCausal;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class AppointmentCancellationCausalController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,7 @@ class AppointmentCancellationCausalController extends Controller
      */
     public function index()
     {
-        //
+        return $this->success(AppointmentCancellationCausal::get(['name As text', 'id As value']));
     }
 
     /**
@@ -35,7 +37,13 @@ class AppointmentCancellationCausalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $appointmentCancellationCausal  = AppointmentCancellationCausal::create($request->all());
+            return $this->success(['message' => 'Causal cancelacion de cita creado correctamente', 'model' => $appointmentCancellationCausal]);
+            // return response()->json('Sede creada correctamente');
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
@@ -46,7 +54,7 @@ class AppointmentCancellationCausalController extends Controller
      */
     public function show(AppointmentCancellationCausal $appointmentCancellationCausal)
     {
-        //
+        
     }
 
     /**
@@ -69,7 +77,13 @@ class AppointmentCancellationCausalController extends Controller
      */
     public function update(Request $request, AppointmentCancellationCausal $appointmentCancellationCausal)
     {
-        //
+        try {
+            $appointmentCancellationCausal = AppointmentCancellationCausal::find(request()->get('id'));
+            $appointmentCancellationCausal->update(request()->all());
+            return $this->success('Causal cancelacion de cita actualizado correctamente');
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 
     /**
@@ -78,8 +92,14 @@ class AppointmentCancellationCausalController extends Controller
      * @param  \App\Models\AppointmentCancellationCausal  $appointmentCancellationCausal
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AppointmentCancellationCausal $appointmentCancellationCausal)
+    public function destroy($id)
     {
-        //
+        try {
+            $appointmentCancellationCausal = AppointmentCancellationCausal::findOrFail($id);
+            $appointmentCancellationCausal->delete();
+            return $this->success('Causal cancelacion de cita eliminado correctamente', 204);
+        } catch (\Throwable $th) {
+            return response()->json([$th->getMessage(), $th->getLine()]);
+        }
     }
 }
